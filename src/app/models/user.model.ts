@@ -10,7 +10,8 @@ interface UserAttributes {
   passwordConfirm: string;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+export interface UserCreationAttributes
+  extends Optional<UserAttributes, 'id'> {}
 
 class User extends Model<UserAttributes, UserCreationAttributes> {
   public id!: number;
@@ -18,6 +19,16 @@ class User extends Model<UserAttributes, UserCreationAttributes> {
   public email!: string;
   public password!: string;
   public passwordConfirm!: string;
+
+  async authenticate(password: string) {
+    const authenticate = await bcrypt
+      .compare(password, this.password)
+      .catch(() => {
+        return false;
+      });
+
+    return authenticate;
+  }
 }
 
 User.init(
@@ -38,6 +49,9 @@ User.init(
         },
         notEmpty: {
           msg: 'Deve ser preenchido.'
+        },
+        notNull: {
+          msg: 'Não pode ser nulo'
         }
       }
     },
@@ -54,6 +68,9 @@ User.init(
         },
         notEmpty: {
           msg: 'Deve ser preenchido.'
+        },
+        notNull: {
+          msg: 'Não pode ser nulo'
         }
       }
     },
@@ -61,9 +78,15 @@ User.init(
       type: DataTypes.STRING(64),
       allowNull: false,
       validate: {
-        min: {
-          args: [8],
+        len: {
+          /* Não precisa limitar o tamanho máximo da senha já que ela é haseada,
+           * mas não achei um validador so para tamanho mínimo 🤡
+           */
+          args: [8, 16],
           msg: 'Deve conter entre 8 e 16 caracteres.'
+        },
+        notNull: {
+          msg: 'Não pode ser nulo'
         }
       }
     },
@@ -73,6 +96,9 @@ User.init(
       validate: {
         async isEqualToPassword(value: string) {
           if (this.password !== value) throw new Error('Senhas não coincidem.');
+        },
+        notNull: {
+          msg: 'Não pode ser nulo'
         }
       }
     }
@@ -91,3 +117,5 @@ User.init(
     timestamps: false
   }
 );
+
+export default User;
