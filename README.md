@@ -32,7 +32,7 @@ npm run dev
 | POST   | '/auth/login'  | Checa as credenciais providas e retorna um token caso tenha sucesso |
 | GET    | '/auth/me'     | Retorna o usuário caso o token recebido no header seja válido       |
 
-### Endpoint options
+### Requests
 
 `'/auth/signup'` recebe um objeto contendo name, email, password e passwordConfirm no body
 
@@ -62,4 +62,4 @@ npm run dev
 
 ## Senhas hasheadas
 
-As senhas salvas nessa aplicação são hasheadas e filtradas durante a crianção do token para garantir a segurança dos dados do usuário
+As senhas salvas nessa aplicação são hasheadas e filtradas durante a criação do token para garantir a segurança dos dados do usuário
