@@ -79,7 +79,7 @@ User.init(
       allowNull: false,
       validate: {
         len: {
-          /* Não precisa limitar o tamanho máximo da senha já que ela é haseada,
+          /* Não precisa limitar o tamanho máximo da senha já que ela é hasheada,
            * mas não achei um validador so para tamanho mínimo 🤡
            */
           args: [8, 16],
@@ -108,7 +108,7 @@ User.init(
     hooks: {
       beforeCreate: async (user: User) => {
         user.password = await bcrypt.hash(user.password, 10).catch(() => {
-          throw new Error('Could not hash password.');
+          throw new Error('Não foi possível concluir o hash da senha.');
         });
       }
     },

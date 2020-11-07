@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize';
 
 /**
- * Isso seria melhor sendo uma variavel de ambiente, foi declarada como
- * variavel comum para simplificar o uso do app
+ * Isso seria melhor sendo uma variável de ambiente. Foi declarada como
+ * variável comum para simplificar o uso do app
  */
 const DB_STORAGE_PATH = './src/app/db/database.db';
 

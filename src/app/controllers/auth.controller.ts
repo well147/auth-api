@@ -11,7 +11,6 @@ export default {
         res.json(result);
       })
       .catch((error: ErrorResponse) => {
-        console.log(error);
         const { status, message, errors } = error;
 
         res.status(status).json({ message, errors });

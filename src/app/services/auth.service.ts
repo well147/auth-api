@@ -3,6 +3,7 @@ import { ValidationError } from 'sequelize';
 import { ValidationErrorItem } from 'sequelize';
 import errorHandler from '../helpers/error-handler';
 import User, { UserCreationAttributes } from '../models/user.model';
+
 const secret = 'segredo muito secreto, shhhh';
 
 const generateEncryptedToken = (payload: object) => {
@@ -22,7 +23,7 @@ const createUser = async (data: UserCreationAttributes) => {
     if (err.name === 'SequelizeValidationError') {
       const badRequest = err.errors.some(
         /**
-         * Ainda não entendi muito bem o porquê, mas validator key não é acessível
+         * Ainda não entendi muito bem o porquê, mas validatorKey não é acessível
          * dentro do tipo ValidationErrorItem, então tenho que adicionar o any pra
          * que o typescript me deixe acessar.
          */
